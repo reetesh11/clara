@@ -1,0 +1,265 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        /* Core backgrounds - Deep space navy */
+        --background: 222 47% 6%;
+        --foreground: 210 40% 98%;
+
+        /* Card surfaces - Slightly elevated */
+        --card: 222 47% 8%;
+        --card-foreground: 210 40% 98%;
+        --card-elevated: 222 47% 10%;
+
+        /* Popover/Modal */
+        --popover: 222 47% 9%;
+        --popover-foreground: 210 40% 98%;
+
+        /* Primary - Electric Teal/Cyan */
+        --primary: 174 72% 56%;
+        --primary-foreground: 222 47% 6%;
+        --primary-glow: 174 80% 50%;
+
+        /* Secondary - Soft indigo */
+        --secondary: 240 30% 18%;
+        --secondary-foreground: 210 40% 98%;
+
+        /* Muted */
+        --muted: 222 30% 14%;
+        --muted-foreground: 215 20% 55%;
+
+        /* Accent - Warm coral for highlights */
+        --accent: 16 85% 65%;
+        --accent-foreground: 222 47% 6%;
+
+        /* Success - Health/Wellness green */
+        --success: 158 64% 52%;
+        --success-foreground: 222 47% 6%;
+
+        /* Warning - Reminder orange */
+        --warning: 38 92% 58%;
+        --warning-foreground: 222 47% 6%;
+
+        /* Cooking - Warm tomato */
+        --cooking: 8 80% 58%;
+        --cooking-foreground: 210 40% 98%;
+
+        /* Health - Fresh mint */
+        --health: 158 64% 48%;
+        --health-foreground: 222 47% 6%;
+
+        /* Reminder - Golden amber */
+        --reminder: 43 96% 56%;
+        --reminder-foreground: 222 47% 6%;
+
+        /* Destructive */
+        --destructive: 0 72% 51%;
+        --destructive-foreground: 210 40% 98%;
+
+        /* Borders & inputs */
+        --border: 222 30% 16%;
+        --input: 222 30% 14%;
+        --ring: 174 72% 56%;
+
+        --radius: 0.75rem;
+
+        /* Clara gradient for backgrounds */
+        --mesh-gradient: radial-gradient(ellipse at 20% 0%, hsl(174 72% 56% / 0.08) 0%, transparent 50%),
+            radial-gradient(ellipse at 80% 100%, hsl(240 30% 40% / 0.06) 0%, transparent 50%),
+            radial-gradient(ellipse at 50% 50%, hsl(16 85% 65% / 0.03) 0%, transparent 70%);
+
+        /* Glow effects */
+        --glow-primary: 0 0 40px hsl(174 72% 56% / 0.25);
+        --glow-accent: 0 0 40px hsl(16 85% 65% / 0.25);
+        --glow-soft: 0 8px 32px hsl(0 0% 0% / 0.4);
+
+        /* Sidebar */
+        --sidebar-background: 222 47% 7%;
+        --sidebar-foreground: 210 40% 90%;
+        --sidebar-primary: 174 72% 56%;
+        --sidebar-primary-foreground: 222 47% 6%;
+        --sidebar-accent: 222 30% 12%;
+        --sidebar-accent-foreground: 210 40% 98%;
+        --sidebar-border: 222 30% 14%;
+        --sidebar-ring: 174 72% 56%;
+    }
+
+    .dark {
+        /* Same as root - dark-first design */
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply bg-background text-foreground antialiased;
+        font-family: 'Inter', system-ui, sans-serif;
+        background-image: var(--mesh-gradient);
+        background-attachment: fixed;
+    }
+}
+
+@layer components {
+
+    /* Glassmorphism card */
+    .glass-card {
+        @apply bg-card/80 backdrop-blur-xl border border-border/50 rounded-xl;
+        box-shadow: var(--glow-soft);
+    }
+
+    /* Agent card with glow */
+    .agent-card {
+        @apply glass-card transition-all duration-300 hover:border-primary/40;
+    }
+
+    .agent-card:hover {
+        box-shadow: var(--glow-primary);
+    }
+
+    /* Clara pattern overlay */
+    .mesh-overlay {
+        background-image:
+            linear-gradient(hsl(var(--primary) / 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, hsl(var(--primary) / 0.03) 1px, transparent 1px);
+        background-size: 40px 40px;
+    }
+
+    /* Gradient text */
+    .gradient-text {
+        @apply bg-clip-text text-transparent;
+        background-image: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
+    }
+
+    /* Primary gradient button */
+    .btn-gradient {
+        @apply relative overflow-hidden;
+        background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(174 80% 45%) 100%);
+    }
+
+    .btn-gradient::before {
+        content: '';
+        @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+        background: linear-gradient(135deg, hsl(174 80% 45%) 0%, hsl(var(--primary)) 100%);
+    }
+
+    .btn-gradient:hover::before {
+        @apply opacity-100;
+    }
+
+    /* Animated mesh connection lines */
+    .mesh-line {
+        stroke: hsl(var(--primary) / 0.3);
+        stroke-width: 1;
+        stroke-dasharray: 4 4;
+        animation: dash 20s linear infinite;
+    }
+
+    @keyframes dash {
+        to {
+            stroke-dashoffset: -100;
+        }
+    }
+
+    /* Pulse glow for active agents */
+    .pulse-glow {
+        animation: pulseGlow 2s ease-in-out infinite;
+    }
+
+    @keyframes pulseGlow {
+
+        0%,
+        100% {
+            box-shadow: 0 0 20px hsl(var(--primary) / 0.2);
+        }
+
+        50% {
+            box-shadow: 0 0 40px hsl(var(--primary) / 0.4);
+        }
+    }
+
+    /* Floating animation */
+    .float {
+        animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-10px);
+        }
+    }
+
+    /* Status indicators */
+    .status-dot {
+        @apply w-2 h-2 rounded-full;
+    }
+
+    .status-active {
+        @apply bg-success;
+        box-shadow: 0 0 8px hsl(var(--success));
+    }
+
+    .status-pending {
+        @apply bg-warning;
+        box-shadow: 0 0 8px hsl(var(--warning));
+    }
+
+    /* Agent type badges */
+    .badge-cooking {
+        @apply bg-cooking/20 text-cooking border-cooking/30;
+    }
+
+    .badge-health {
+        @apply bg-health/20 text-health border-health/30;
+    }
+
+    .badge-reminder {
+        @apply bg-reminder/20 text-reminder border-reminder/30;
+    }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        @apply bg-muted/30 rounded-full;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        @apply bg-muted-foreground/30 rounded-full;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        @apply bg-muted-foreground/50;
+    }
+}
+
+@layer utilities {
+
+    /* Text glow */
+    .text-glow-primary {
+        text-shadow: 0 0 20px hsl(var(--primary) / 0.5);
+    }
+
+    .text-glow-accent {
+        text-shadow: 0 0 20px hsl(var(--accent) / 0.5);
+    }
+}
